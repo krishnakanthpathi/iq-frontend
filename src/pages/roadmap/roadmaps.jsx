@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Roadmaps = () => {
+const Roadmaps = (props) => {
+    const themeclass = props.theme === 'dark' ? 'bg-dark text-light' : 'bg-light text-dark';
+
     return (
         <>
-            <div className="container mt-4 p-4">
+            <div className={"container mt-4 p-4 " + themeclass}>
                 <h1 className="text-center">Roadmaps</h1>
                 <div className="row">
                     <div className="col-md-4">

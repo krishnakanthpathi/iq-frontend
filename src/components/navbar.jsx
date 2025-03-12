@@ -1,11 +1,21 @@
 import { useState , useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = (props) => {
+    const themeclass = props.theme === 'dark' ? 'bg-dark navbar-dark' : 'bg-light navbar-light';
+    const changeTheme = () => {
+        const newTheme = props.theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', newTheme);
+        props.setTheme(newTheme);
+    }
+
+    
+
     return (
-        <>
-            <nav className="navbar navbar-expand-lg ">
+        <>  
+            <nav className={"navbar navbar-expand-lg " + themeclass}>
                 <div className="container-fluid">
+
                     <Link className="navbar-brand" to="#">
                        {`< 🧠 IQ />`}
                     </Link>
@@ -26,8 +36,8 @@ const Navbar = () => {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/doubts">
-                                    Doudts
+                                <Link className="nav-link" to="/doubts/active">
+                                    Doubts
                                 </Link>
                             </li>
                             <li className="nav-item">
@@ -41,9 +51,24 @@ const Navbar = () => {
                                 </Link>
                             </li>
                         </ul>
+                        {/* right most */}
                         <div className="d-flex" role="search">
+
+                            {!props.user && <>
                             <Link className="btn m-1 btn-outline-success" to="/login">Log In</Link>
-                            <Link className="btn m-1 btn-outline-primary" to="/register">Sign Up</Link>
+                            <Link className="btn m-1 btn-outline-warning" to="/register">Sign Up</Link>
+                            </> }
+                            
+                            {props.user && <>
+                                <Link className="p-1" to="/profile" >
+                                <img src={props.user.avatar} alt="Profile" className='rounded-circle' width={40} height={40}  /> </Link>
+                            </> }
+
+                            <Link 
+                            className={props.theme == "light" ? "btn m-1 btn-dark" : "btn m-1 btn-light" }
+                            onClick={changeTheme} to="#">
+                                <i className={props.theme == "light" ? "bi bi-moon "  : "bi bi-sun" }></i>
+                            </Link>
                         </div>
                     </div>
                 </div>
