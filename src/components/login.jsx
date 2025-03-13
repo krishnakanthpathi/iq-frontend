@@ -21,7 +21,8 @@ const Login = (props) => {
             localStorage.setItem('login', true);
             localStorage.setItem('token', response.data.token);
 
-            props.setUser(response.data);
+            props.setUser(response.data); // set user asynchronus func
+            console.log(props.user);
 
         } catch (error) {
             console.log('Invalid email or password ' + error);
@@ -42,6 +43,7 @@ const Login = (props) => {
                         className="form-control"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        data-bs-theme={props.theme}
                         required
                     />
                 </div>
@@ -52,6 +54,7 @@ const Login = (props) => {
                         className="form-control"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        data-bs-theme={props.theme}
                         required
                     />
                 </div>

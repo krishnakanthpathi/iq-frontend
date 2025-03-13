@@ -47,21 +47,25 @@ const Signup = (props) => {
             <h2 className="text-center">Sign Up</h2>
             <form onSubmit={handleSubmit} className="w-50 mx-auto">
                 <div className="form-group">
-                    <label>Username:</label>
+                    <label>Username: </label>
                     <input
                         type="text"
                         className="form-control"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        aria-describedby="basic-addon2"
                         required
+                        data-bs-theme={props.theme}
                     />
                 </div>
+                
                 <div className="form-group">
                     <label>Avatar:</label>
                     <input
                         type="file"
                         className="form-control"
                         onChange={handleImageChange}
+                        data-bs-theme={props.theme}
                     />
                 </div>
                 <div className="form-group">
@@ -71,6 +75,7 @@ const Signup = (props) => {
                         className="form-control"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        data-bs-theme={props.theme}
                         required
                     />
                 </div>
@@ -81,6 +86,7 @@ const Signup = (props) => {
                         className="form-control"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        data-bs-theme={props.theme}
                         required
                     />
                 </div>
@@ -90,6 +96,7 @@ const Signup = (props) => {
                         className="form-control"
                         value={bio}
                         onChange={(e) => setBio(e.target.value)}
+                        data-bs-theme={props.theme}
                     />
                 </div>
                 {!loader && 

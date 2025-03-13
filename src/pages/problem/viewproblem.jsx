@@ -1,42 +1,101 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import MultiTextEditor from './texteditor';
 
 const ViewProblem = (props) => {
-    const title = "Sample Problem Title";
-    const description = "This is a sample problem description.";
-    const difficulty = "Medium";
-    const tags = ["Array", "String", "Dynamic Programming"];
+    
+    const [problem, setProblem] = useState({
+        _id: '',
+        title: '',
+        description: '',
+        difficulty: '',
+        tags: [],
+        token : ''
+    });
     const [solution, setSolution] = useState('');
-    const themeclass = props.theme === 'dark' ? 'bg-dark text-light' : 'bg-light text-dark';
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    useEffect(() => {
+        // Fetch problem details from API
+        try {
+            const fetchProblem = async () => {
+                const params = window.location.pathname.split('/');
+                const id = params[params.length - 1];
+                const respose = await fetch(`http://localhost:8080/api/problems/${id}`);
+                const data = await respose.json();
+                
+                setProblem(data.problem);
+                console.log('Problem:', data.problem);  
+
+            }   
+            fetchProblem();
+
+        } catch (error) {
+            console.error('Error fetching problem:', error);
+        }
+    }, []);
+    const handleCorrect = async () => {
+        const token = localStorage.getItem('token');
+        console.log('Token:', token);
+        console.log('User:', props.user._id);
+        console.log('problem:', problem._id);
         
+        try {
+            const response = await axios.put(`http://localhost:8080/api/users/add`, {
+                userId: props.user._id,
+                problemId: problem._id
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            const data = response.data;
+            console.log('Response:', data);
+        } catch (error) {
+            console.error('Failed to submit solution:', error);
+        }
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post(`http://localhost:8080/api/ai/solve`, {
+                    problem: JSON.stringify(problem),
+                    solution: solution,
+                });
+    
+            const data = response.data;
+            console.log('Response:', data);
+            if (data.data == "Correct\n") {
+                handleCorrect(e);
+            }
+
+        } catch (error) {
+            console.error('Failed to submit solution:', error);
+        }
+
         console.log('Solution submitted:', solution);
     };
 
     return (
-        <div className={"container mt-4 p-4 " + themeclass}>
-            <div className="card">
+        <div className= "container mt-4 p-4 ">
+            <div className="card"  data-bs-theme={props.theme}>
                 <div className="card-body">
                     <div className="d-flex justify-content-between">
                         <div className="p-2">
-                            <h1 className="card-title">{title}</h1>
+                            <h1 className="card-title">{problem.title}</h1>
                         </div>
                         <div className="p-2">
-                            <span className="badge bg-success">Solved</span>
-                            <span className="badge bg-secondary">In Progress</span>
-                            <span className="badge bg-warning">Attempted</span>
+                            
                         </div>
                     </div>
-                    <p className="card-text">{description}</p>
+                    <p className="card-text">{problem.description}</p>
                     <div className="mb-3">
                         <h3>Difficulty</h3>
-                        <p>{difficulty}</p>
+                        <p>{problem.difficulty}</p>
                     </div>
                     <div className="mb-3">
                         <h3>Tags</h3>
-                        <p>{tags.join(', ')}</p>
+                        <p>{problem.tags.join(', ')}</p>
                     </div>
                     <div className="mb-3">
                         <h3>Submit Solution</h3>

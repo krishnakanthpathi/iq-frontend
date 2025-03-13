@@ -11,7 +11,7 @@ const Profile = (props) => {
     }
 
     return (
-        <div className="container mt-5">
+        <div className="container mt-5" data-bs-theme={props.theme}>
             <div className="card">
                 <div className="card-header d-flex justify-content-between">
                     <h4>Profile</h4>

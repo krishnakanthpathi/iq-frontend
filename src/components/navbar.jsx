@@ -2,7 +2,7 @@ import { useState , useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = (props) => {
-    const themeclass = props.theme === 'dark' ? 'bg-dark navbar-dark' : 'bg-light navbar-light';
+    
     const changeTheme = () => {
         const newTheme = props.theme === 'dark' ? 'light' : 'dark';
         localStorage.setItem('theme', newTheme);
@@ -13,7 +13,7 @@ const Navbar = (props) => {
 
     return (
         <>  
-            <nav className={"navbar navbar-expand-lg " + themeclass}>
+            <nav className="navbar navbar-expand-lg " data-bs-theme={props.theme}>
                 <div className="container-fluid">
 
                     <Link className="navbar-brand" to="#">

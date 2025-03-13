@@ -1,9 +1,8 @@
 
 const Footer = (props) => {
-        const themeclass = props.theme === 'dark' ? 'bg-dark text-light' : 'bg-light text-dark';
 
     return (<>
-        <footer className={"text-center mt-4 " + themeclass}>
+        <footer className="text-center mt-4 "  data-bs-theme={props.theme}>
             <p>&copy; {new Date().getFullYear()} Learning Platform. All rights reserved.</p>
         </footer>
     </>);

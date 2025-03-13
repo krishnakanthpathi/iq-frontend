@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 
 const Home = (props) => {
-    const themeclass = props.theme === 'dark' ? 'bg-dark text-light' : 'bg-light text-dark';
     return (
-        <div className={"container " + themeclass} >
+        <div className="container "  data-bs-theme={props.theme} >
             <header className="jumbotron text-center">
                 <h1>Welcome to the Learning Platform </h1>
                 <p>Empowering students and teachers through interactive learning and doubt-solving.</p>

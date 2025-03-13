@@ -8,7 +8,7 @@ const Roadmaps = (props) => {
         <>
             <div className={"container mt-4 p-4 " + themeclass}>
                 <h1 className="text-center">Roadmaps</h1>
-                <div className="row">
+                <div className="row"  data-bs-theme={props.theme}>
                     <div className="col-md-4">
                         <div className="card mb-4 shadow-sm">
                             <div className="card-body">
@@ -18,7 +18,7 @@ const Roadmaps = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-4" >
                         <div className="card mb-4 shadow-sm">
                             <div className="card-body">
                                 <h5 className="card-title">Backend Developer</h5>

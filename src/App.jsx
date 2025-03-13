@@ -39,14 +39,16 @@ function App() {
         setUser:setUser
     }
     return (
-    <>
+    <> <div>
+      
+    </div>
        <Navbar {...properties}  />
 
        <Routes>
             <Route path="/" element={<Home {...properties} />} />
 
             <Route path="/problems" element={<Problems {...properties} />} />
-            <Route path="/problems/view" element={<ViewProblem {...properties} />} />
+            <Route path="/problems/view/:id" element={<ViewProblem {...properties} />} />
             
             <Route path="/doubts/active" element={<ActiveDoudts {...properties} />} />
             <Route path="/doubts/view" element={<ViewDoubt {...properties} />} />
