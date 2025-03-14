@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const DoubtForm = () => {
+const DoubtForm = (props) => {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -23,7 +23,7 @@ const DoubtForm = () => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container mt-5" data-bs-theme={props.theme} >
             <h2>Create a Doubt</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
