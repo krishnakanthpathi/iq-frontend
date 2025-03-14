@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+
+import Alert from './alert';    
 
 const Signup = (props) => {
     const [username, setUsername] = useState('');
@@ -9,6 +10,12 @@ const Signup = (props) => {
     const [password, setPassword] = useState('');
     const [bio, setBio] = useState('');
     const [loader, setLoader] = useState(false);
+    const [properties , setProperties] = useState({
+        display : "d-none",
+        color : 'danger',
+        category : "Error",
+        message : "hi",
+    })
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -28,11 +35,24 @@ const Signup = (props) => {
             const response = await axios.post('http://localhost:8080/api/users/register', 
                 { username, avatar, email, password, bio, isAdmin: true }
             );
-            console.log(response);
-            // window.location = '/login';
+            setProperties({
+                color : "success",
+                display : "" ,
+                message : `welcome ${response.data.data.username}` ,
+                category : " 🍭 "
+            })
+            localStorage.setItem('user', JSON.stringify(response.data.data));
+            localStorage.setItem('token' , response.data.token);
+            window.location = '/profile';
 
         } catch (error) {
             console.log('Signup failed: ' + error);
+            setProperties({
+                color : "danger",
+                display : "" ,
+                message : "Signup failed " ,
+                category : "Unsuccessfull "
+            })
         }
         setLoader(false);
         setUsername('');
@@ -46,6 +66,7 @@ const Signup = (props) => {
         <div className="container mt-5">
             <h2 className="text-center">Sign Up</h2>
             <form onSubmit={handleSubmit} className="w-50 mx-auto">
+                <Alert {...properties} />
                 <div className="form-group">
                     <label>Username: </label>
                     <input

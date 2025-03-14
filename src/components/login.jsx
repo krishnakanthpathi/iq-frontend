@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import  axios from 'axios';
+import Alert  from './alert';
 
 const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loader, setLoader] = useState(false);
+    const [properties , setProperties] = useState({
+        display : "d-none",
+        color : 'danger',
+        category : "Error",
+        message : "hi",
+    })
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -14,6 +21,12 @@ const Login = (props) => {
                 { email, password }
             );
             const token = response.data.token;
+            setProperties({
+                color : "success",
+                display : "" ,
+                message : `welcome ${response.data.data.username}` ,
+                category : " 🍭 "
+            })
 
             window.location = '/profile';
             
@@ -26,16 +39,25 @@ const Login = (props) => {
 
         } catch (error) {
             console.log('Invalid email or password ' + error);
+            setProperties({
+                color : "danger",
+                display : "" ,
+                message : "Invalid email or password " ,
+                category : "Unsuccessfull "
+            })
+            setLoader(false);
         }
-        console.log('Email:', props);
         setEmail('');
         setPassword('');
     };
+
+
 
     return (
         <div className="container mt-5">
             <h2 className="text-center">Login</h2>
             <form onSubmit={handleSubmit} className="w-50 mx-auto">
+                <Alert {...properties} />
                 <div className="form-group">
                     <label>Email :</label>
                     <input

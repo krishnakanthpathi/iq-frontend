@@ -16,7 +16,7 @@ const Navbar = (props) => {
             <nav className="navbar navbar-expand-lg " data-bs-theme={props.theme}>
                 <div className="container-fluid">
 
-                    <Link className="navbar-brand" to="#">
+                    <Link className="navbar-brand" to="/">
                        {`< 🧠 IQ />`}
                     </Link>
 
