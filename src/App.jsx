@@ -36,7 +36,8 @@ function App() {
         theme:theme,
         setTheme:setTheme,
         user:user,
-        setUser:setUser
+        setUser:setUser,
+        url : import.meta.env.VITE_REACT_APP_API_URL
     }
     return (
     <> <div>

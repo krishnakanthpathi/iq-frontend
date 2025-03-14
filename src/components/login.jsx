@@ -17,7 +17,7 @@ const Login = (props) => {
         e.preventDefault();
         try {
             setLoader(true);
-            const response = await axios.post('http://localhost:8080/api/users/login', 
+            const response = await axios.post(`${props.url}/users/login`, 
                 { email, password }
             );
             const token = response.data.token;

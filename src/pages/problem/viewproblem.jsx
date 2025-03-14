@@ -29,7 +29,7 @@ const ViewProblem = (props) => {
             const fetchProblem = async () => {
                 const params = window.location.pathname.split('/');
                 const id = params[params.length - 1];
-                const respose = await fetch(`http://localhost:8080/api/problems/${id}`);
+                const respose = await fetch(`${props.url}/problems/${id}`);
                 const data = await respose.json();
                 
                 setProblem(data.problem);
@@ -51,7 +51,7 @@ const ViewProblem = (props) => {
         console.log('problem:', problem._id);
         
         try {
-            const response = await axios.put(`http://localhost:8080/api/users/add`, {
+            const response = await axios.put(`${props.url}/users/add`, {
                 userId: props.user._id,
                 problemId: problem._id
             }, {
@@ -69,7 +69,7 @@ const ViewProblem = (props) => {
         e.preventDefault();
         setLoader(true);
         try {
-            const response = await axios.post(`http://localhost:8080/api/ai/solve`, {
+            const response = await axios.post(`${props.url}/ai/solve`, {
                     problem: JSON.stringify(problem),
                     solution: solution,
                 });

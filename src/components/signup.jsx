@@ -32,7 +32,7 @@ const Signup = (props) => {
         e.preventDefault();
         try {
             setLoader(true);
-            const response = await axios.post('http://localhost:8080/api/users/register', 
+            const response = await axios.post(`${props.url}/users/register`, 
                 { username, avatar, email, password, bio, isAdmin: true }
             );
             setProperties({
