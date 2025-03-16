@@ -12,7 +12,7 @@ const Login = (props) => {
         category : "Error",
         message : "hi",
     })
-
+    console.log(props.url);
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
