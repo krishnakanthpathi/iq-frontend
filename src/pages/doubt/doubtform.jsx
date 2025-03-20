@@ -1,29 +1,52 @@
-import React, { useState } from 'react';
-
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 const DoubtForm = (props) => {
+    const cur_location = window.location.pathname.split("/");
+    const problemId = cur_location[cur_location.length - 1];
+
+    // Initialize state properly
     const [formData, setFormData] = useState({
-        title: '',
-        description: '',
-        problemId: '',
-        userId: ''
+        title: "",
+        description: "",
+        problemId: problemId || "",  // Ensure it's never undefined
+        userId: props.user?._id || "" // Ensure it's never undefined
     });
+    const [loader, setLoader] = useState(false);
+
+    // Update state if props.user changes (important for async data)
+    useEffect(() => {
+        setFormData((prev) => ({
+            ...prev,
+            userId: props.user?._id || "",
+            problemId: problemId || "",
+        }));
+    }, [props.user, problemId]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission logic here
-        console.log(formData);
+        console.log("Form data:", formData);
+        setLoader(true);
+        try {
+            const response = await axios.post(`${props.url}/doubts/create` , {...formData});
+            const data = response.data;
+            console.log("Doubt submitted successfully:", data);
+        } catch (error) {
+            console.log("Error submitting doubt:", error);
+        } finally {
+            setLoader(false);
+        }
     };
 
     return (
-        <div className="container mt-5" data-bs-theme={props.theme} >
+        <div className="container mt-5" data-bs-theme={props.theme}>
             <h2>Create a Doubt</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
@@ -58,8 +81,7 @@ const DoubtForm = (props) => {
                         id="problemId"
                         name="problemId"
                         value={formData.problemId}
-                        onChange={handleChange}
-                        required
+                        readOnly
                     />
                 </div>
                 <div className="mb-3">
@@ -70,11 +92,12 @@ const DoubtForm = (props) => {
                         id="userId"
                         name="userId"
                         value={formData.userId}
-                        onChange={handleChange}
+                        readOnly
                         required
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                {!loader && <button type="submit" className="btn btn-primary">Submit</button>}
+                {loader && <button type="submit" className="btn btn-primary" disabled>Loading...</button>}
             </form>
         </div>
     );

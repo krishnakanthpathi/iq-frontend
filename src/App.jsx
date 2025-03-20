@@ -60,7 +60,7 @@ function App() {
             <Route path="/register" element={<Signup {...properties} />} />
 
             <Route path="/roadmaps" element={<Roadmaps {...properties} />} />
-            <Route path="problems/ask/doubt" element={<DoubtForm {...properties} />} />
+            <Route path="problems/ask/doubt/:id" element={<DoubtForm {...properties} />} />
 
           
       </Routes>

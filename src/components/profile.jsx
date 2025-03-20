@@ -28,6 +28,17 @@ const Profile = (props) => {
                             <p>Email: {props.user.email}</p>
                             <p>Bio: {props.user.bio} </p>
                         </div>
+                        <div className="col-md-8 p-4">
+                            {console.log(props.user)}
+                            <h4>Solved Problems</h4>
+                            {props.user && props.user.solved &&
+                            props.user.solved.map((problem, index) => (
+                                <div key={index} className="card m-2">
+                                    {problem}
+                                </div>
+
+                            ))}
+                        </div>
                         
                     </div>
                 </div>

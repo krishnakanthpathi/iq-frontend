@@ -6,10 +6,10 @@ const Home = (props) => {
             <header className="jumbotron text-center">
                 <h1>Welcome to the Learning Platform </h1>
                 <p>Empowering students and teachers through interactive learning and doubt-solving.</p>
-                <div>
+                {!props.user && <div>
                     <Link to="/login" className="btn btn-primary m-2">Login</Link>
                     <Link to="/register" className="btn btn-secondary m-2">Register</Link>
-                </div>
+                </div>}
             </header>
 
             <section className="row text-center">

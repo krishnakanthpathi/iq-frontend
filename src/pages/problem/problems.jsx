@@ -9,7 +9,7 @@ const Problems = (props) => {
         const fetchProblems = async () => {
             try {
                 // Fetch problems from the server
-                const response = await axios.get(`${props.url}/problems`);
+                const response = await axios.get(`${props.url}/problems/all`);
                 setProblems(response.data.problems);
             } catch (error) {
                 console.error('Failed to fetch problems:', error);
