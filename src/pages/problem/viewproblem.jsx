@@ -25,6 +25,8 @@ const ViewProblem = (props) => {
         message : "" ,
         category : ""
     })
+    const handleStatus = problem.usersSolved.includes(props.user._id);
+
 
     // fetching porblems description
     useEffect(() => {
@@ -45,11 +47,6 @@ const ViewProblem = (props) => {
             console.error('Error fetching problem:', error);
         }
     }, []);
-
-    // fetching submissions
-    // useEffect(() => {
-    //     console.log('Fetching submissions...');
-    // }, [problem]);
 
     // adding to user and problem
     const handleCorrect = async () => {
@@ -145,7 +142,6 @@ const ViewProblem = (props) => {
 
         console.log('Solution submitted:', solution);
     };
-    const handleStatus = problem.usersSolved.includes(props.user._id);
 
     // checking status
     return (
